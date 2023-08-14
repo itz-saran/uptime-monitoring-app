@@ -179,7 +179,22 @@ _users.DELETE = async (data) => {
 		};
 	}
 	try {
+		/* Delete checks associated with the given user */
+		const { data: userData } = await readFile("users", phone);
+
+		try {
+			userData.checks.forEach(
+				async (check) => await deleteFile("checks", check)
+			);
+		} catch (error) {
+			return {
+				status: 500,
+				data: "Error while deleting checks",
+			};
+		}
+
 		await deleteFile("users", phone);
+
 		return {
 			status: 200,
 			data: "User deleted successfully",
