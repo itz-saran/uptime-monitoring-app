@@ -49,15 +49,17 @@ const httpsOptions = {
 	cert: fs.readFileSync("./https/localhost.pem"),
 };
 const httpServer = http.createServer(serverFunction);
+
+// eslint-disable-next-line no-unused-vars
 const httpsServer = https.createServer(httpsOptions, serverFunction);
 
 httpServer.listen(config.port, () => {
 	console.log("http listening on port ", config.port);
 });
 
-httpsServer.listen(config.httpsPort, () => {
-	console.log("https listening on port ", config.httpsPort);
-});
+// httpsServer.listen(config.httpsPort, () => {
+// 	console.log("https listening on port ", config.httpsPort);
+// });
 
 const router = {
 	ping: handlers.ping,
